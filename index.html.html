@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Adventures - Learn to Read with Fun!</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #87CEEB 0%, #98FB98 100%);
+            min-height: 100vh;
+            color: #2c3e50;
+        }
+
+        /* Container for all content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header styles */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #e74c3c;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        /* Main content area */
+        .main-content {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            min-height: 400px;
+        }
+
+        .main-content.active {
+            display: block;
+        }
+
+        /* Homepage specific styles */
+        .homepage {
+            display: block;
+        }
+
+        .welcome-message {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .welcome-message h1 {
+            font-size: 2.2rem;
+            color: #e74c3c;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome-message p {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            line-height: 1.5;
+        }
+
+        /* Navigation buttons */
+        .nav-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ffa726);
+            border: none;
+            padding: 25px 20px;
+            border-radius: 20px;
+            font-family: 'Comic Sans MS', cursive;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn:active {
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.reading {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+        }
+
+        .nav-btn.bible {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+        }
+
+        .nav-btn.progress {
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+        }
+
+        /* Page content styles */
+        .page-content h2 {
+            font-size: 2rem;
+            color: #e74c3c;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .placeholder {
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 30px 0;
+            border: 3px dashed #e17055;
+        }
+
+        .placeholder h3 {
+            font-size: 1.5rem;
+            color: #2d3436;
+            margin-bottom: 15px;
+        }
+
+        .placeholder p {
+            font-size: 1.1rem;
+            color: #636e72;
+            line-height: 1.6;
+        }
+
+        /* Back button */
+        .back-btn {
+            background: linear-gradient(45deg, #74b9ff, #0984e3);
+            border: none;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-family: 'Comic Sans MS', cursive;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Fun decorative elements */
+        .decoration {
+            position: fixed;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            color: #f39c12;
+            font-size: 2rem;
+            animation: twinkle 2s infinite;
+        }
+
+        .heart {
+            color: #e74c3c;
+            font-size: 1.5rem;
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        /* Lesson grid styles */
+        .lesson-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        .lesson-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 3px solid transparent;
+        }
+
+        .lesson-card:hover:not(.locked) {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .lesson-card.available {
+            border-color: #4ecdc4;
+            background: linear-gradient(135deg, #ffffff, #e8f8f7);
+        }
+
+        .lesson-card.completed {
+            border-color: #f39c12;
+            background: linear-gradient(135deg, #fff9e6, #ffeaa7);
+        }
+
+        .lesson-card.locked {
+            background: linear-gradient(135deg, #ddd, #bbb);
+            color: #666;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .lesson-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .lesson-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        .lesson-description {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            line-height: 1.4;
+        }
+
+        .locked .lesson-title,
+        .locked .lesson-description {
+            color: #999;
+        }
+
+        /* Individual lesson styles */
+        .lesson-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .lesson-header {
+            text-align: center;
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+        }
+
+        .lesson-header h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .lesson-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .lesson-content {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .sound-practice {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .sound-button {
+            background: linear-gradient(45deg, #ff6b6b, #ffa726);
+            border: none;
+            padding: 20px;
+            border-radius: 15px;
+            font-family: 'Comic Sans MS', cursive;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .sound-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .exercise-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            border-radius: 15px;
+            border: 2px dashed #4caf50;
+        }
+
+        .exercise-title {
+            font-size: 1.4rem;
+            color: #2e7d32;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .exercise-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .option-button {
+            background: white;
+            border: 3px solid #4caf50;
+            padding: 15px;
+            border-radius: 15px;
+            font-family: 'Comic Sans MS', cursive;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2e7d32;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option-button:hover {
+            background: #4caf50;
+            color: white;
+            transform: scale(1.02);
+        }
+
+        .option-button.correct {
+            background: #4caf50;
+            color: white;
+            animation: correctAnswer 0.6s ease;
+        }
+
+        .option-button.incorrect {
+            background: #f44336;
+            color: white;
+            animation: shake 0.5s ease;
+        }
+
+        .complete-lesson-btn {
+            background: linear-gradient(45deg, #4caf50, #8bc34a);
+            border: none;
+            padding: 20px 40px;
+            border-radius: 20px;
+            font-family: 'Comic Sans MS', cursive;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            display: block;
+            margin: 30px auto;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .complete-lesson-btn.enabled {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .complete-lesson-btn:hover.enabled {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Celebration modal */
+        .celebration-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .celebration-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #fff9c4, #f4e04d);
+            padding: 40px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: bounceIn 0.6s ease;
+        }
+
+        .celebration-content h3 {
+            font-size: 2.5rem;
+            color: #e74c3c;
+            margin-bottom: 15px;
+        }
+
+        .celebration-content p {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            margin-bottom: 25px;
+        }
+
+        .continue-btn {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 15px;
+            font-family: 'Comic Sans MS', cursive;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .continue-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Animations */
+        @keyframes correctAnswer {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: translate(-50%, -50%) scale(0.3); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .welcome-message h1 {
+                font-size: 1.8rem;
+            }
+
+            .welcome-message p {
+                font-size: 1.1rem;
+            }
+
+            .nav-btn {
+                font-size: 1.2rem;
+                padding: 20px 15px;
+            }
+
+            .nav-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 20px;
+            }
+
+            .logo {
+                font-size: 1.7rem;
+            }
+
+            .tagline {
+                font-size: 1rem;
+            }
+
+            .welcome-message h1 {
+                font-size: 1.5rem;
+            }
+
+            .nav-btn {
+                font-size: 1.1rem;
+                padding: 18px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Decorative elements -->
+    <div class="decoration star" style="top: 10%; left: 5%;">⭐</div>
+    <div class="decoration heart" style="top: 20%; right: 8%;">💖</div>
+    <div class="decoration star" style="bottom: 15%; left: 10%;">⭐</div>
+    <div class="decoration heart" style="bottom: 25%; right: 15%;">💖</div>
+    
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">📚 Reading Adventures 📖</div>
+            <div class="tagline">Learn to Read & Discover God's Word!</div>
+        </header>
+
+        <!-- Homepage -->
+        <main class="main-content homepage" id="homepage">
+            <div class="welcome-message">
+                <h1>Welcome, Little Reader! 🌟</h1>
+                <p>Get ready for an amazing adventure! We'll help you learn to read and discover wonderful stories from the Bible. Choose where you'd like to start your journey!</p>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="nav-btn reading" onclick="showPage('reading')">
+                    📝 Start Reading
+                </button>
+                <button class="nav-btn bible" onclick="showPage('bible')">
+                    📖 Bible Reading
+                </button>
+                <button class="nav-btn progress" onclick="showPage('progress')">
+                    🏆 My Progress
+                </button>
+            </div>
+        </main>
+
+        <!-- Start Reading Page -->
+        <main class="main-content" id="reading">
+            <button class="back-btn" onclick="showPage('homepage')">
+                ← Back to Home
+            </button>
+            
+            <div class="page-content">
+                <h2>🚀 90-Day Reading Adventure!</h2>
+                
+                <div class="lesson-grid" id="lessonGrid">
+                    <!-- Lessons will be generated by JavaScript -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Individual Lesson Page -->
+        <main class="main-content" id="lesson">
+            <button class="back-btn" onclick="showPage('reading')">
+                ← Back to Lessons
+            </button>
+            
+            <div class="lesson-container" id="lessonContainer">
+                <!-- Lesson content will be loaded here -->
+            </div>
+        </main>
+
+        <!-- Bible Reading Page -->
+        <main class="main-content" id="bible">
+            <button class="back-btn" onclick="showPage('homepage')">
+                ← Back to Home
+            </button>
+            
+            <div class="page-content">
+                <h2>✨ Bible Reading Adventures!</h2>
+                
+                <div class="placeholder">
+                    <h3>📖 Daily Bible Reading Plan Coming Soon!</h3>
+                    <p>
+                        Discover amazing stories from the Bible! We're creating a special daily reading plan just for kids like you. You'll learn about heroes of faith, God's love, and wonderful adventures from the Bible!
+                    </p>
+                    <p style="margin-top: 15px;">
+                        🌟 <strong>What you'll discover:</strong><br>
+                        • Bible stories made simple and fun<br>
+                        • Daily verses to learn<br>
+                        • Colorful illustrations<br>
+                        • Questions to think about
+                    </p>
+                </div>
+            </div>
+        </main>
+
+        <!-- My Progress Page -->
+        <main class="main-content" id="progress">
+            <button class="back-btn" onclick="showPage('homepage')">
+                ← Back to Home
+            </button>
+            
+            <div class="page-content">
+                <h2>🏆 Track Your Amazing Progress!</h2>
+                
+                <div class="placeholder">
+                    <h3>📊 Progress Tracker Coming Soon!</h3>
+                    <p>
+                        Watch yourself grow as a reader! We're building a special place where you can see all the awesome progress you're making. You'll earn stars, badges, and certificates as you learn!
+                    </p>
+                    <p style="margin-top: 15px;">
+                        🎉 <strong>Track your achievements:</strong><br>
+                        • Reading levels completed<br>
+                        • Bible stories read<br>
+                        • Badges and rewards earned<br>
+                        • Daily streak counter
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Celebration Modal -->
+    <div class="celebration-modal" id="celebrationModal">
+        <div class="celebration-content">
+            <h3>🎉 Fantastic Job! 🎉</h3>
+            <p>You completed the lesson! You're becoming an amazing reader!</p>
+            <div style="font-size: 3rem; margin: 20px 0;">⭐🏆⭐</div>
+            <button class="continue-btn" onclick="closeCelebration()">Continue Adventure!</button>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for page navigation and lesson system
+        
+        // Progress storage (using in-memory storage instead of localStorage)
+        let lessonProgress = {
+            completed: [1], // Day 1 starts unlocked and completed as example
+            currentLesson: 2
+        };
+        
+        // 90-Day Lesson Plan (Alpha Phonics style)
+        const lessons = [
+            {
+                id: 1,
+                title: "Day 1: Letter Sounds A, B, C",
+                description: "Learn the sounds of your first letters!",
+                sounds: [
+                    { letter: "A", sound: "ah", example: "Apple" },
+                    { letter: "B", sound: "buh", example: "Ball" },
+                    { letter: "C", sound: "kuh", example: "Cat" }
+                ],
+                exercises: [
+                    {
+                        question: "What sound does the letter 'A' make?",
+                        options: ["ah", "buh", "kuh"],
+                        correct: 0
+                    },
+                    {
+                        question: "Which letter makes the 'buh' sound?",
+                        options: ["A", "B", "C"],
+                        correct: 1
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "Day 2: Letter Sounds D, E, F",
+                description: "Continue learning new letter sounds!",
+                sounds: [
+                    { letter: "D", sound: "duh", example: "Dog" },
+                    { letter: "E", sound: "eh", example: "Elephant" },
+                    { letter: "F", sound: "fuh", example: "Fish" }
+                ],
+                exercises: [
+                    {
+                        question: "What sound does the letter 'E' make?",
+                        options: ["duh", "eh", "fuh"],
+                        correct: 1
+                    },
+                    {
+                        question: "Which letter makes the 'fuh' sound?",
+                        options: ["D", "E", "F"],
+                        correct: 2
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "Day 3: Letter Sounds G, H, I",
+                description: "Keep building your phonics foundation!",
+                sounds: [
+                    { letter: "G", sound: "guh", example: "Goat" },
+                    { letter: "H", sound: "huh", example: "Hat" },
+                    { letter: "I", sound: "ih", example: "Igloo" }
+                ],
+                exercises: [
+                    {
+                        question: "What sound does the letter 'I' make?",
+                        options: ["guh", "huh", "ih"],
+                        correct: 2
+                    },
+                    {
+                        question: "Which letter makes the 'guh' sound?",
+                        options: ["G", "H", "I"],
+                        correct: 0
+                    }
+                ]
+            },
+            {
+                id: 4,
+                title: "Day 4: Letter Sounds J, K, L",
+                description: "More exciting letter sounds to explore!",
+                sounds: [
+                    { letter: "J", sound: "juh", example: "Jump" },
+                    { letter: "K", sound: "kuh", example: "Kite" },
+                    { letter: "L", sound: "luh", example: "Lion" }
+                ],
+                exercises: [
+                    {
+                        question: "What sound does the letter 'K' make?",
+                        options: ["juh", "kuh", "luh"],
+                        correct: 1
+                    },
+                    {
+                        question: "Which letter makes the 'luh' sound?",
+                        options: ["J", "K", "L"],
+                        correct: 2
+                    }
+                ]
+            },
+            {
+                id: 5,
+                title: "Day 5: Review A-L Sounds",
+                description: "Let's practice all the sounds we've learned!",
+                sounds: [
+                    { letter: "A", sound: "ah", example: "Apple" },
+                    { letter: "B", sound: "buh", example: "Ball" },
+                    { letter: "C", sound: "kuh", example: "Cat" },
+                    { letter: "D", sound: "duh", example: "Dog" },
+                    { letter: "E", sound: "eh", example: "Elephant" },
+                    { letter: "F", sound: "fuh", example: "Fish" },
+                    { letter: "G", sound: "guh", example: "Goat" },
+                    { letter: "H", sound: "huh", example: "Hat" },
+                    { letter: "I", sound: "ih", example: "Igloo" },
+                    { letter: "J", sound: "juh", example: "Jump" },
+                    { letter: "K", sound: "kuh", example: "Kite" },
+                    { letter: "L", sound: "luh", example: "Lion" }
+                ],
+                exercises: [
+                    {
+                        question: "Which letter makes the 'eh' sound?",
+                        options: ["D", "E", "F"],
+                        correct: 1
+                    },
+                    {
+                        question: "What sound does the letter 'J' make?",
+                        options: ["ih", "juh", "kuh"],
+                        correct: 1
+                    },
+                    {
+                        question: "Which word starts with the 'guh' sound?",
+                        options: ["Hat", "Goat", "Fish"],
+                        correct: 1
+                    }
+                ]
+            }
+            // Additional lessons would continue here...
+        ];
+        
+        // Current lesson state
+        let currentLessonData = null;
+        let exerciseProgress = [];
+        
+        /**
+         * Show the specified page and hide all others
+         * @param {string} pageId - The ID of the page to show
+         */
+        function showPage(pageId) {
+            // Hide all pages
+            const allPages = document.querySelectorAll('.main-content');
+            allPages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show the specified page
+            if (pageId === 'reading') {
+                generateLessonGrid();
+            }
+            
+            document.getElementById(pageId).classList.add('active');
+            
+            // Scroll to top of page for better user experience
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Add a fun animation effect when changing pages
+            animatePageTransition();
+        }
+        
+        /**
+         * Generate the lesson grid with progress indicators
+         */
+        function generateLessonGrid() {
+            const lessonGrid = document.getElementById('lessonGrid');
+            lessonGrid.innerHTML = '';
+            
+            lessons.forEach(lesson => {
+                const lessonCard = document.createElement('div');
+                lessonCard.className = 'lesson-card';
+                
+                // Determine lesson status
+                let status = 'locked';
+                let icon = '🔒';
+                
+                if (lessonProgress.completed.includes(lesson.id)) {
+                    status = 'completed';
+                    icon = '⭐';
+                } else if (lesson.id === lessonProgress.currentLesson || lesson.id === 1) {
+                    status = 'available';
+                    icon = '📖';
+                }
+                
+                lessonCard.classList.add(status);
+                
+                lessonCard.innerHTML = `
+                    <span class="lesson-icon">${icon}</span>
+                    <div class="lesson-title">${lesson.title}</div>
+                    <div class="lesson-description">${lesson.description}</div>
+                `;
+                
+                // Add click event for available lessons
+                if (status !== 'locked') {
+                    lessonCard.addEventListener('click', () => startLesson(lesson.id));
+                }
+                
+                lessonGrid.appendChild(lessonCard);
+            });
+            
+            // Add placeholder cards for future lessons
+            for (let i = lessons.length + 1; i <= 90; i++) {
+                const placeholderCard = document.createElement('div');
+                placeholderCard.className = 'lesson-card locked';
+                placeholderCard.innerHTML = `
+                    <span class="lesson-icon">🔒</span>
+                    <div class="lesson-title">Day ${i}</div>
+                    <div class="lesson-description">Coming soon!</div>
+                `;
+                lessonGrid.appendChild(placeholderCard);
+            }
+        }
+        
+        /**
+         * Start a specific lesson
+         * @param {number} lessonId - The ID of the lesson to start
+         */
+        function startLesson(lessonId) {
+            const lesson = lessons.find(l => l.id === lessonId);
+            if (!lesson) return;
+            
+            currentLessonData = lesson;
+            exerciseProgress = new Array(lesson.exercises.length).fill(false);
+            loadLessonContent(lesson);
+            showPage('lesson');
+        }
+        
+        /**
+         * Load lesson content into the lesson container
+         * @param {Object} lesson - The lesson data
+         */
+        function loadLessonContent(lesson) {
+            const container = document.getElementById('lessonContainer');
+            
+            container.innerHTML = `
+                <div class="lesson-header">
+                    <h2>${lesson.title}</h2>
+                    <p>Let's learn together! 🌟</p>
+                </div>
+                
+                <div class="lesson-content">
+                    <h3>🔤 Today's Letter Sounds:</h3>
+                    <div class="sound-practice">
+                        ${lesson.sounds.map(sound => `
+                            <button class="sound-button" onclick="playSound('${sound.sound}', '${sound.example}')">
+                                ${sound.letter}
+                                <div style="font-size: 0.8rem; margin-top: 5px;">${sound.sound}</div>
+                            </button>
+                        `).join('')}
+                    </div>
+                    
+                    <div style="text-align: center; margin: 20px 0;">
+                        <p style="font-size: 1.1rem; color: #7f8c8d;">
+                            Click each letter to hear its sound! 🎵
+                        </p>
+                    </div>
+                    
+                    ${lesson.exercises.map((exercise, index) => `
+                        <div class="exercise-section">
+                            <h4 class="exercise-title">Exercise ${index + 1}: ${exercise.question}</h4>
+                            <div class="exercise-options">
+                                ${exercise.options.map((option, optionIndex) => `
+                                    <button class="option-button" onclick="selectAnswer(${index}, ${optionIndex}, ${exercise.correct})">
+                                        ${option}
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `).join('')}
+                    
+                    <button class="complete-lesson-btn" id="completeLessonBtn" onclick="completeLesson()">
+                        🎉 Complete Lesson! 🎉
+                    </button>
+                </div>
+            `;
+            
+            updateCompleteButton();
+        }
+        
+        /**
+         * Play sound effect (visual feedback since we can't play actual audio)
+         * @param {string} sound - The phonetic sound
+         * @param {string} example - Example word
+         */
+        function playSound(sound, example) {
+            // Visual feedback for sound
+            alert(`The letter makes the "${sound}" sound, like in "${example}"! 🎵`);
+        }
+        
+        /**
+         * Handle answer selection in exercises
+         * @param {number} exerciseIndex - Index of the exercise
+         * @param {number} selectedOption - Index of selected option
+         * @param {number} correctOption - Index of correct answer
+         */
+        function selectAnswer(exerciseIndex, selectedOption, correctOption) {
+            const exerciseSection = document.querySelectorAll('.exercise-section')[exerciseIndex];
+            const buttons = exerciseSection.querySelectorAll('.option-button');
+            
+            // Reset all buttons in this exercise
+            buttons.forEach(btn => {
+                btn.classList.remove('correct', 'incorrect');
+            });
+            
+            // Mark the selected answer
+            if (selectedOption === correctOption) {
+                buttons[selectedOption].classList.add('correct');
+                exerciseProgress[exerciseIndex] = true;
+                
+                // Disable all buttons in this exercise
+                buttons.forEach(btn => {
+                    btn.style.pointerEvents = 'none';
+                });
+                
+            } else {
+                buttons[selectedOption].classList.add('incorrect');
+                // Allow retry - don't disable buttons
+            }
+            
+            updateCompleteButton();
+        }
+        
+        /**
+         * Update the complete lesson button state
+         */
+        function updateCompleteButton() {
+            const completeBtn = document.getElementById('completeLessonBtn');
+            if (completeBtn) {
+                const allComplete = exerciseProgress.every(completed => completed === true);
+                
+                if (allComplete) {
+                    completeBtn.classList.add('enabled');
+                } else {
+                    completeBtn.classList.remove('enabled');
+                }
+            }
+        }
+        
+        /**
+         * Complete the current lesson
+         */
+        function completeLesson() {
+            if (!currentLessonData) return;
+            
+            const allComplete = exerciseProgress.every(completed => completed === true);
+            if (!allComplete) {
+                alert("Please complete all exercises first! 😊");
+                return;
+            }
+            
+            // Mark lesson as completed
+            if (!lessonProgress.completed.includes(currentLessonData.id)) {
+                lessonProgress.completed.push(currentLessonData.id);
+            }
+            
+            // Unlock next lesson
+            lessonProgress.currentLesson = currentLessonData.id + 1;
+            
+            // Show celebration
+            showCelebration();
+        }
+        
+        /**
+         * Show celebration modal
+         */
+        function showCelebration() {
+            const modal = document.getElementById('celebrationModal');
+            modal.style.display = 'block';
+            
+            // Add confetti effect (simple version)
+            createConfetti();
+        }
+        
+        /**
+         * Close celebration modal
+         */
+        function closeCelebration() {
+            const modal = document.getElementById('celebrationModal');
+            modal.style.display = 'none';
+            showPage('reading'); // Return to lesson grid
+        }
+        
+        /**
+         * Create simple confetti effect
+         */
+        function createConfetti() {
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#f0932b', '#eb4d4b', '#6c5ce7'];
+            const confettiCount = 50;
+            
+            for (let i = 0; i < confettiCount; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.innerHTML = '🎉';
+                    confetti.style.position = 'fixed';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-10px';
+                    confetti.style.fontSize = '2rem';
+                    confetti.style.zIndex = '2000';
+                    confetti.style.pointerEvents = 'none';
+                    
+                    document.body.appendChild(confetti);
+                    
+                    // Animate confetti falling
+                    let fall = 0;
+                    const fallInterval = setInterval(() => {
+                        fall += 5;
+                        confetti.style.top = fall + 'px';
+                        confetti.style.transform = `rotate(${fall * 2}deg)`;
+                        
+                        if (fall > window.innerHeight + 100) {
+                            clearInterval(fallInterval);
+                            document.body.removeChild(confetti);
+                        }
+                    }, 50);
+                }, i * 100);
+            }
+        }
+        
+        /**
+         * Add a simple animation effect when changing pages
+         */
+        function animatePageTransition() {
+            const activeContent = document.querySelector('.main-content.active');
+            if (activeContent) {
+                activeContent.style.transform = 'scale(0.95)';
+                activeContent.style.opacity = '0.8';
+                
+                setTimeout(() => {
+                    activeContent.style.transform = 'scale(1)';
+                    activeContent.style.opacity = '1';
+                }, 150);
+            }
+        }
+        
+        /**
+         * Add floating animation to decorative elements
+         */
+        function animateDecorations() {
+            const decorations = document.querySelectorAll('.decoration');
+            decorations.forEach((decoration, index) => {
+                // Add random floating movement
+                setInterval(() => {
+                    const randomX = Math.random() * 10 - 5;
+                    const randomY = Math.random() * 10 - 5;
+                    decoration.style.transform = `translate(${randomX}px, ${randomY}px)`;
+                }, 2000 + (index * 500)); // Stagger the animations
+            });
+        }
+        /**
+         * Add a simple animation effect when changing pages
+         */
+        function animatePageTransition() {
+            const activeContent = document.querySelector('.main-content.active');
+            if (activeContent) {
+                activeContent.style.transform = 'scale(0.95)';
+                activeContent.style.opacity = '0.8';
+                
+                setTimeout(() => {
+                    activeContent.style.transform = 'scale(1)';
+                    activeContent.style.opacity = '1';
+                }, 150);
+            }
+        }
+        
+        /**
+         * Add floating animation to decorative elements
+         */
+        function animateDecorations() {
+            const decorations = document.querySelectorAll('.decoration');
+            decorations.forEach((decoration, index) => {
+                // Add random floating movement
+                setInterval(() => {
+                    const randomX = Math.random() * 10 - 5;
+                    const randomY = Math.random() * 10 - 5;
+                    decoration.style.transform = `translate(${randomX}px, ${randomY}px)`;
+                }, 2000 + (index * 500)); // Stagger the animations
+            });
+        }
+        
+        // Initialize the page when it loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Start with homepage visible
+            showPage('homepage');
+            
+            // Start decoration animations
+            animateDecorations();
+            
+            // Add keyboard navigation for accessibility
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    // Close celebration modal if open
+                    const modal = document.getElementById('celebrationModal');
+                    if (modal && modal.style.display === 'block') {
+                        closeCelebration();
+                    } else {
+                        showPage('homepage');
+                    }
+                }
+            });
+            
+            // Close celebration modal when clicking outside
+            document.getElementById('celebrationModal').addEventListener('click', function(event) {
+                if (event.target === this) {
+                    closeCelebration();
+                }
+            });
+            
+            console.log('🎉 Reading Adventures website with 90-day lesson plan loaded successfully!');
+            console.log('📚 Available lessons:', lessons.length);
+            console.log('🏆 Current progress:', lessonProgress);
+        });
+        
+        // Add button click effects for better user feedback
+        document.addEventListener('click', function(event) {
+            if (event.target.tagName === 'BUTTON' && !event.target.classList.contains('sound-button')) {
+                // Add a quick scale animation to buttons when clicked (except sound buttons which have their own effect)
+                event.target.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    event.target.style.transform = '';
+                }, 100);
+            }
+        });
+
+        // Add some helper functions for future expansion
+        
+        /**
+         * Reset all lesson progress (for testing or new users)
+         */
+        function resetProgress() {
+            lessonProgress = {
+                completed: [],
+                currentLesson: 1
+            };
+            generateLessonGrid();
+            console.log('🔄 Progress reset!');
+        }
+        
+        /**
+         * Unlock all lessons (for testing purposes)
+         */
+        function unlockAllLessons() {
+            lessonProgress = {
+                completed: lessons.map(l => l.id),
+                currentLesson: lessons.length + 1
+            };
+            generateLessonGrid();
+            console.log('🔓 All lessons unlocked!');
+        }
+        
+        /**
+         * Get current progress statistics
+         */
+        function getProgressStats() {
+            const stats = {
+                totalLessons: 90,
+                availableLessons: lessons.length,
+                completedLessons: lessonProgress.completed.length,
+                currentLesson: lessonProgress.currentLesson,
+                completionPercentage: Math.round((lessonProgress.completed.length / 90) * 100)
+            };
+            console.log('📊 Progress Statistics:', stats);
+            return stats;
+        }
+        
+        // Make some functions available globally for testing
+        window.resetProgress = resetProgress;
+        window.unlockAllLessons = unlockAllLessons;
+        window.getProgressStats = getProgressStats;
+    </script>
+</body>
+</html>
